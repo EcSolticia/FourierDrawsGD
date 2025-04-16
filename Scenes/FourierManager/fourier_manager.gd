@@ -3,7 +3,6 @@ extends Node2D
 @export var coefficients_file_path: String = "fourier_coffs.txt"
 @export var coff_count: int = -1
 
-@export var customizable: bool = false
 @export var running: bool = false
 @export var sorted: bool = true
 @export var will_add_pencil: bool = true
@@ -94,5 +93,4 @@ func prepare_series() -> void:
 		add_child(pencil_instance)
 		
 func _ready() -> void:
-	if !customizable:
-		prepare_series()		
+	prepare_series()

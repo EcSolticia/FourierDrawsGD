@@ -27,4 +27,4 @@ movie_writer/movie_file="/home/ecsolticia/Surprise/Introduction/heartshape.png"
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.360784, 0.701961, 0.219608, 1)
+environment/defaults/default_clear_color=Color(0.54902, 0.388235, 1, 1)

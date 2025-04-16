@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://b7bkgomrldi50" path="res://Scenes/Pencil/pencil.gd" id="1_yig80"]
 
 [node name="Pencil" type="Line2D"]
-width = 4.0
+width = 2.0
 default_color = Color(0, 0, 0, 1)
 script = ExtResource("1_yig80")
 
 [node name="Inner" type="Line2D" parent="."]
-width = 2.0
+width = 1.0
 default_color = Color(0.984314, 0.254902, 0.254902, 1)
