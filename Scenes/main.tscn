@@ -6,6 +6,7 @@
 
 [node name="FourierManager" parent="." instance=ExtResource("1_jjgbg")]
 coefficients_file_path = "fcoffs.txt"
+coff_count = 98
 running = true
 scale_lines = 0.01
 

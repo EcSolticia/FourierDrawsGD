@@ -55,7 +55,8 @@ func load_fourier_coffs() -> void:
 			
 	var preliminary_N: int = fourier_coffs.size()
 	if coff_count <= preliminary_N:
-		print("Provided coff_count value does not add padding.")
+		for i in range(coff_count, preliminary_N):
+			fourier_coffs[i] = Vector2()
 	else:
 		for i in range(coff_count - preliminary_N):
 			fourier_coffs.push_back(Vector2())
@@ -80,10 +81,12 @@ func prepare_series() -> void:
 		
 		if !k:
 			add_child(epicycle)
+			last_epicycle = epicycle
 		else:
 			last_epicycle.get_node("Tip").add_child(epicycle)
 		
-		last_epicycle = epicycle
+		if epicycle.coff:
+			last_epicycle = epicycle
 		
 	if will_add_pencil and last_epicycle:
 		var pencil_instance: Line2D = pencil_scene.instantiate()
