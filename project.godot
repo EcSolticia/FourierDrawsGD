@@ -14,3 +14,17 @@ config/name="FourierDrawsGD"
 run/main_scene="uid://i8cwdmysj5b8"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[editor]
+
+movie_writer/mjpeg_quality=1.0
+movie_writer/movie_file="/home/ecsolticia/Surprise/Introduction/heartshape.png"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.360784, 0.701961, 0.219608, 1)

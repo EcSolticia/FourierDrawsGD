@@ -4,7 +4,7 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="s" parent="." instance=ExtResource("1_jjgbg")]
+[node name="FourierManager" parent="." instance=ExtResource("1_jjgbg")]
 coefficients_file_path = "fcoffs.txt"
 running = true
 scale_lines = 0.01
