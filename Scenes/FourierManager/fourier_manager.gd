@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var coefficients_file_path: String = "fourier_coffs.txt"
+@export var coff_count: int = -1
+
 @export var customizable: bool = false
 @export var running: bool = false
 @export var sorted: bool = true
@@ -10,11 +13,12 @@ extends Node2D
 var epicycle_scene: PackedScene = preload("res://Scenes/Epicycle/epicycle.tscn")
 var pencil_scene: PackedScene = preload("res://Scenes/Pencil/pencil.tscn")
 
-@export var fourier_coffs: Array[Vector2] = []
+var fourier_coffs: Array[Vector2] = []
 @onready var fourier_data: Array = []
 
 func initialize_fourier_data(N: int) -> void:
 	fourier_data.resize(N)
+	
 	for k in range(N):
 		var current: Array = [fourier_coffs[k], k]
 		fourier_data[k] = current
@@ -23,11 +27,18 @@ func fourier_data_cmp(v1: Array, v2: Array) -> bool:
 	return v1[0].length() > v2[0].length()
 
 func load_fourier_coffs() -> void:
-	if not FileAccess.file_exists("user://fourier_coffs.txt"):
-		print("Hello? The coefficients file doesn't even exist as user://fourier_coffs.txt. What am I even supposed to work with???")
+	var fullpath: String = "user://" + coefficients_file_path
+	
+	if not FileAccess.file_exists(fullpath):
+		print("Hello? The coefficients file doesn't even exist as " + fullpath + ". What am I even supposed to work with???")
 		return
 		
-	var file = FileAccess.open("user://fourier_coffs.txt", FileAccess.READ)
+	var file = FileAccess.open(fullpath, FileAccess.READ)
+	
+	if !file:
+		print("Ohh noo! I am unable to open the file at path " + fullpath + "! Now I'm sad :(")
+		return
+	
 	while file.get_position() < file.get_length():
 		var line: String = file.get_line()
 		
@@ -41,6 +52,16 @@ func load_fourier_coffs() -> void:
 			var imag_component: float = float(float_toks[1].split(")")[0])
 			var new_vector: Vector2 = Vector2(real_component, imag_component)
 			fourier_coffs.push_back(new_vector)
+			
+			
+	var preliminary_N: int = fourier_coffs.size()
+	if coff_count <= preliminary_N:
+		print("Provided coff_count value does not add padding.")
+	else:
+		for i in range(coff_count - preliminary_N):
+			fourier_coffs.push_back(Vector2())
+			
+	file.close()
 	
 func prepare_series() -> void:
 	load_fourier_coffs()
