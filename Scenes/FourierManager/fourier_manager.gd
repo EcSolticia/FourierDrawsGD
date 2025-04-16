@@ -22,7 +22,28 @@ func initialize_fourier_data(N: int) -> void:
 func fourier_data_cmp(v1: Array, v2: Array) -> bool:
 	return v1[0].length() > v2[0].length()
 
+func load_fourier_coffs() -> void:
+	if not FileAccess.file_exists("user://fourier_coffs.txt"):
+		print("Hello? The coefficients file doesn't even exist as user://fourier_coffs.txt. What am I even supposed to work with???")
+		return
+		
+	var file = FileAccess.open("user://fourier_coffs.txt", FileAccess.READ)
+	while file.get_position() < file.get_length():
+		var line: String = file.get_line()
+		
+		if line[0] == '#':
+			continue;
+		
+		var vector_tokens: PackedStringArray = line.split(" ", false)
+		for vector_token in vector_tokens:
+			var float_toks: PackedStringArray = vector_token.split(",")
+			var real_component: float = float(float_toks[0].split("(")[1])
+			var imag_component: float = float(float_toks[1].split(")")[0])
+			var new_vector: Vector2 = Vector2(real_component, imag_component)
+			fourier_coffs.push_back(new_vector)
+	
 func prepare_series() -> void:
+	load_fourier_coffs()
 	var N: int = fourier_coffs.size()
 	initialize_fourier_data(N)
 	
@@ -44,7 +65,7 @@ func prepare_series() -> void:
 		
 		last_epicycle = epicycle
 		
-	if will_add_pencil:
+	if will_add_pencil and last_epicycle:
 		var pencil_instance: Line2D = pencil_scene.instantiate()
 		pencil_instance.drawing_node_path = last_epicycle.get_path()
 		# adding child after all the epicycles are ready ensures that they do not calculate
